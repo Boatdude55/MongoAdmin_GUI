@@ -1,0 +1,13 @@
+{
+  "name": "mongo-admin",
+  "version": "0.0.0",
+  "description": "A adminstrative app for mongodb using express and mongoose",
+  "licence": "MIT",
+  "main": "server.js",
+  "author": "Ivan Mucyo Ngabo <IvanMucyoNgabo@gmail.com>",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.2",
+    "mongoose": "^5.0.4"
+  }
+}

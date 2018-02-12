@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--<html lang="en"  ng-app="MongoAdminApp" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Mongo Admin</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+        <!--
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        
+        
+        <script type="text/javascript" src="/js/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="AdminController as admin">
+            <h1>Welcome to Mongo Admin!</h1>
+            
+            <form ng-submit="todoList.addTodo()">
+                <input class="btn-primary" type="submit" value="Post">
+            </form>
+            
+            <div id="res">
+                response
+            </div>
+        </div>
+    </body>
+</html>-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>MongoDB Admininstrative GUI</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+    </head>
+    
+    <body>
+        
+        <div class="">
+            <div class="">
+                
+                <h1 class="">MongoDB Admin</h1>
+                
+                <div class="">
+                    <div class="">
+                      <input class="btn" id="click-upload-input" type="file" multiple>
+                      <input type="text" id="collection-name" placeholder="collection name">
+                      <button class="btn" type="submit" id="connect-db" data-connection="off">Database ON</button>
+                      <button class="btn" type="submit" id="update-btn">Update Database</button>
+                    </div>
+                    
+                    <div class="head-nav">
+                        <button class="btn" id="create">
+                            Create Schema
+                        </button>
+                        <button class="btn" id="preview">
+                            Preview Document
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="">
+                <div class="" id="res-container">
+                    <div class="" id="resText">
+                    </div>
+                    <div class="" id="resProcess">
+                        <div class="" id="progress"><span class="txt-sec" id="percentCount">0%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="./js/main.js"></script>
+    </body>
+</html>
