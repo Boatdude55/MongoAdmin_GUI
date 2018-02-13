@@ -1,7 +1,7 @@
-var express = require("./src/config/express");
+var express = require("./core/server/config/express");
 var path = require("path");
-var client =  module.exports = path.join(__dirname, "/src/client");
-var index = path.join(__dirname,"/src/client/index.html");
+var client =  module.exports = path.join(__dirname, "/core/client");
+var index = path.join(__dirname,"/core/client/index.html");
 
 var app = express(client, index , function ( err) {
   
