@@ -216,7 +216,7 @@ window.addEventListener("load", function () {
        
         var client = new xmlHttpHandler();
         var route = event.target.dataset["connection"] === "on"?"/mongo/stop":"/mongo/start";
-        var status = event.target.dataset["connection"] === "on"? "on" : "off";
+        var status = event.target.dataset["connection"] === "on"? "off" : "on";
 
         client.post(status, route, "text/plain", function ( db ) {
             return db;

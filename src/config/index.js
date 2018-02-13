@@ -1,6 +1,6 @@
 module.exports = {
-  db: 'mongodb://'+process.env.IP+'/data',
-  dbInit: "mongod --bind_ip=$IP --dbpath=data --nojournal --rest '$@'",
-  dbShutDown: "mongod --shutdown",
+  db: "mongodb://"+process.env.IP+"/db/data",
+  dbInit: "mongod -config /etc/mongod.conf",
+  dbShutDown: "mongod -config /etc/mongod.conf --shutdown",
   sessionSecret: 'developmentSessionSecret'
 };
