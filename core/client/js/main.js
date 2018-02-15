@@ -142,7 +142,7 @@ function read ( file, callback ) {
         
     }catch(err){
     
-        alert( "func(read): ",err.name, err.message );
+        console.log( "func(read): ",err.name, err.message );
     
     }
   
@@ -175,7 +175,7 @@ var xmlHttpHandler = function () {
                 if ( this.readyState === 4 && this.status === 200 ) {
                     
                     if ( this.responseText !== '' ) {
-                        alert("back",this.responseText)
+                        
                         document.getElementById("resText").innerHTML += ("<p class='log-entry'>" + this.responseText + "</p>");
                   
                     }

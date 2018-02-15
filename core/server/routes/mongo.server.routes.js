@@ -11,10 +11,14 @@ module.exports.post = function ( app ) {
         var mongo = require("../controllers/mongo.server.controller");
         mongo.stop( req , res, next );
     });
-    
-    app.use(function ( err , req , res , next ) {
-         
-        res.status( 500 ).send("Process Failed: " + err.name +" , " + err.message);
-        
+
+    app.use("/mongo",function ( err , req , res , next ) {
+ 
+        if ( err ) {
+            
+            res.status( 500 ).send("Process Failed: " + err.name +" , " + err.message);
+            
+        }
     });
+
 };

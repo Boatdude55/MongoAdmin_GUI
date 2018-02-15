@@ -16,18 +16,18 @@ module.exports.init = function ( req, res, next ) {
               if ( err ) {
                   
                 console.log('Unable to connect to Mongo.', err.name,err.message);
-                next(err);
+                return next(err);
         
               } else {
         
-                  console.log('Connected to Mongo....');
+
                   res.status(200).send("Started ALL MongoDB");
               }
             } );
             
         }else {
             
-            next(error);
+           return next(error);
         }
     });
     
@@ -44,7 +44,7 @@ module.exports.stop = function ( req, res, next ) {
       if ( err ) {
           
         console.log('Unable to disconnect to Mongo.', err.name,err.message);
-        next(err);
+        return next(err);
 
       } else {
 
@@ -58,7 +58,7 @@ module.exports.stop = function ( req, res, next ) {
                     
                 }else {
                     
-                    next(error);
+                    return next(error);
                 }
             });
             
