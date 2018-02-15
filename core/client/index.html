@@ -31,6 +31,7 @@
         <meta charset="UTF-8">
         <title>MongoDB Admininstrative GUI</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="./css/style.custom.css" type="text/css" />
     </head>
     
     <body>
@@ -59,13 +60,15 @@
                 </div>
             </div>
             
-            <div class="">
-                <div class="" id="res-container">
-                    <div class="" id="resText">
+            <div class="res-container" id="res-container">
+                <div class="log-content border-left">
+                    <h4 class="text-center">Log</h4>
+                    <div id="resText">
+                        
                     </div>
-                    <div class="" id="resProcess">
-                        <div class="" id="progress"><span class="txt-sec" id="percentCount">0%</span></div>
-                    </div>
+                </div>
+                <div class="log-resourse" id="resProcess">
+                    <div class="" id="progress"><span class="txt-sec" id="percentCount">0%</span></div>
                 </div>
             </div>
         </div>

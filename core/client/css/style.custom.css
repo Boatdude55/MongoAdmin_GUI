@@ -1,0 +1,14 @@
+.log-content{
+    float: right;
+    width: 50%;
+}
+
+.log-resource{
+width: 50%;
+}
+
+.log-entry{
+    background-color: rgb(150,150,200);
+    padding: 5px;
+    margin: 0px;
+}

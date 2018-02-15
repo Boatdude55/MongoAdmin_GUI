@@ -7,7 +7,7 @@ module.exports.post = function ( app ) {
     });
     
     app.post("/mongo/stop", function ( req, res, next ) {
-       
+        console.log("starting shutdown process");
         var mongo = require("../controllers/mongo.server.controller");
         mongo.stop( req , res, next );
     });

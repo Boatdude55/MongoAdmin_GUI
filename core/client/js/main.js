@@ -175,8 +175,8 @@ var xmlHttpHandler = function () {
                 if ( this.readyState === 4 && this.status === 200 ) {
                     
                     if ( this.responseText !== '' ) {
-                        
-                        document.getElementById("resText").innerHTML += ("<p>" + this.responseText + "</p><br>");
+                        alert("back",this.responseText)
+                        document.getElementById("resText").innerHTML += ("<p class='log-entry'>" + this.responseText + "</p>");
                   
                     }
                 }
@@ -217,11 +217,11 @@ window.addEventListener("load", function () {
         var client = new xmlHttpHandler();
         var route = event.target.dataset["connection"] === "on"?"/mongo/stop":"/mongo/start";
         var status = event.target.dataset["connection"] === "on"? "off" : "on";
-
+        
         client.post(status, route, "text/plain", function ( db ) {
             return db;
         });
-        
+
         event.target.innerText = "Database"+ " " + status.toUpperCase();
         event.target.dataset["connection"] = status;
     });
@@ -244,7 +244,7 @@ window.addEventListener("load", function () {
     });
 });
 
-window.addEventListener("unload", function ( event ) {
+/*window.addEventListener("close", function ( event ) {
 
     
     var dbStatus = document.getElementById("connect-db");
@@ -258,4 +258,4 @@ window.addEventListener("unload", function ( event ) {
         
     }
     
-});
+});*/
