@@ -1,3 +1,34 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+.content-container{
+    height: 100%;
+}
+.main-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 70%;
+}
+
+.head-container{
+    width: 100%;
+    height: 20%;
+}
+.column{
+    width: 50%;
+}
+.tail-container{
+    width: 100%;
+    height:5%;
+}
+
+.logger{
+    overflow-y: scroll;
+}
+/*
 .log-content{
     float: right;
     width: 50%;
@@ -6,11 +37,7 @@
 .log-resource{
 width: 50%;
 }
-
-.logger{
-    overflow-y: scroll;
-}
-
+*/
 .bg-danger{
     background-color: rgb(255,100,100);
     color: rgb(255,255,255);
