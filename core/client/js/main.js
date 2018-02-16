@@ -249,19 +249,3 @@ window.addEventListener("load", function () {
     
     });
 });
-
-/*window.addEventListener("close", function ( event ) {
-
-    
-    var dbStatus = document.getElementById("connect-db");
-    
-    if( dbStatus.dataset["connection"] === "on" ) {
-        
-        var xhr = new xmlHttpHandler();
-        xhr.post("off", "/mongo/stop", "text/plain",function ( db ) {
-            return db;
-        });
-        
-    }
-    
-});*/

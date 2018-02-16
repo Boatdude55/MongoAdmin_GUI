@@ -51,11 +51,16 @@
                         </form>
                     </div>
                     
+                    <div id="preview-content">
+                        Preview content
+                        DIVS that when clicked change context to preview json and compare it to xml
+                        <div id="xml-content">XML</div><div id="json-content">JSON</div>
+                    </div>
                     <div class="head-nav">
                         <button class="btn" id="create">
                             Create Schema
                         </button>
-                        <button class="btn" id="preview">
+                        <button class="btn" id="preview" data-target="preview-content" data-xml="xml-content" data-json="json-content">
                             Preview Document
                         </button>
                     </div>
