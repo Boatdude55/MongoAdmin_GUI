@@ -28,16 +28,6 @@ body{
 .logger{
     overflow-y: scroll;
 }
-/*
-.log-content{
-    float: right;
-    width: 50%;
-}
-
-.log-resource{
-width: 50%;
-}
-*/
 .bg-danger{
     background-color: rgb(255,100,100);
     color: rgb(255,255,255);
