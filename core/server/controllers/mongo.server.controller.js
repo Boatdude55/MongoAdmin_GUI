@@ -2,7 +2,7 @@ module.exports.init = function ( req, res, next ) {
  
     var child_process = require("child_process");
     var config = require('../config');
-    var db = require("../config/mongoClient");
+    var db = require("../config/mongoose");
     
     
     child_process.exec( config.dbInit, function ( error, stdout, stderr ) {
@@ -37,7 +37,7 @@ module.exports.stop = function ( req, res, next ) {
 
     var child_process = require("child_process");
     var config = require('../config');
-    var db = require("../config/mongoClient");
+    var db = require("../config/mongoose");
     
     db.close( function ( err ) {
         

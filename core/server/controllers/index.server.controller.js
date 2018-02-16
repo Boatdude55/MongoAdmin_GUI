@@ -14,11 +14,20 @@ module.exports.update = function ( req, res, next ) {
     console.assert( req.body !== undefined , function () {
         res.status(500).send("JSON undefined");
     });
-    //var mongoose = require("../config/mongoose").db;
-    //var mongoAdmin = require("../model");//contains mongoose function for adding documents; save()
-    //var model = require("../model/schemas");//folder contains models
     
-    //var newModel = new model(req.body);
-    res.status(200).send("Document recieved");
+    try{
+        var mongoose = require("../config/mongoose").db;
+        var mongooseAdmin = require("../models/index.model.controller.js");//contains mongoose function for adding documents; save()
+        var model = require("../models/schemas");//folder contains models
+        
+        var newModel = new model.billSummary(req.body);
+
+        res.status(200).send("Document recieved");
+        
+    }catch( err ) {
+        
+        console.log("Issue adding document",err.name, err.message);
+        next(err);
+    }
     
 };

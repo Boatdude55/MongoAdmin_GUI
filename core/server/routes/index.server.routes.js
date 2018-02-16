@@ -35,4 +35,12 @@ module.exports.post = function ( app ) {
         index.update( req, res, next );
         
     });
+    
+    app.use( function ( err, req, res, next ) {
+        
+        if(err){
+            
+            res.status(500).send("JSON undefined");
+        }
+    });
 };

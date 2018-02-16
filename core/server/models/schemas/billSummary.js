@@ -56,4 +56,4 @@ var mongoose = require('mongoose');
   }
  } );
 
-module.exports.billSummaryModel = mongoose.model('BillSummaries', BillSummarySchema);
+module.exports = mongoose.model('BillSummaries', BillSummarySchema);

@@ -1,23 +1,23 @@
-//var config = require('../config');
 /**
  * Template credit to Stefan Fidanov
  * 
  * */
-var MongoClient = require('mongodb').MongoClient;
+
+var mongoose = require('mongoose');
 
 var state = {
   db: null,
 };
 
-exports.connect = function ( url, callback ) {
-  
+module.exports.connect = function( url, callback ) {
+
   if ( state.db ) {
     
     return callback();
     
   }
   
-  MongoClient.connect(url, function ( err, db ) {
+  mongoose.connect(url, function ( err, db ) {
     
     if ( err ) {
       
@@ -28,15 +28,16 @@ exports.connect = function ( url, callback ) {
     callback();
     
   });
+  
 };
 
-exports.get = function () {
+module.exports.get = function () {
   
   return state.db;
   
 };
 
-exports.close = function ( callback ) {
+module.exports.close = function ( callback ) {
   
   if ( state.db ) {
     

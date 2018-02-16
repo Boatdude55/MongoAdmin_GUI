@@ -211,13 +211,19 @@ window.addEventListener("load", function () {
     var updateBtn = document.getElementById("update-btn");
     var connectBtn = document.getElementById("connect-db");
     var clickInput = document.getElementById("click-upload-input");
+    var form = document.getElementById("form");
+    
+    form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+    });
     
     connectBtn.addEventListener("click", function ( event ) {
        
         var client = new xmlHttpHandler();
         var route = event.target.dataset["connection"] === "on"?"/mongo/stop":"/mongo/start";
         var status = event.target.dataset["connection"] === "on"? "off" : "on";
-        
+
         client.post(status, route, "text/plain", function ( db ) {
             return db;
         });
