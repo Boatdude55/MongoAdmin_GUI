@@ -1,5 +1,41 @@
 /**
+ * Creates a new router for errors
+ * @class
+ * @this constructor
+ * */
+function ErrorHandler () {
+    
+    //var that = this;
+    this.errElem = null;
+    this.successElem = null;
+    
+}
+/**
+ * @function Route error to relevant html element
+ * @param {File} src
+ * */
+ErrorHandler.prototype.readError = function ( err ) {
+
+    if ( typeof err === "string" ) {
+        
+        this.errElem.innerHTML += ("<p class='bg-danger'>" + err + "</p>");
+        
+    }else{
+        
+        this.errElem.innerHTML += "<p class='bg-danger'>" + err.name + " : " + err.message +"</p>";
+        
+    }
+};
+
+ErrorHandler.prototype.readSuccess = function ( success ) {
+    console.log(this);
+    this.successElem.innerHTML += "<p class='bg-success'>" + success +"</p>";
+    
+};
+
+/**
  * Various parsing utilites
+ * @type {Object}
  **/
 var parsingUtilities = {
     camelCaseFormat: function ( propertyName ) {
@@ -49,8 +85,10 @@ var parsingUtilities = {
 
 /**
  * Template credit to David Walsh
+ * Changes XML to JSON string
+ * @param {XMLDocument} xml document to be parsed
+ * @return {string} json string
  * */
- // Changes XML to JSON object
 function xmlToJson( xml ) {
 	
 	// Create the return object
@@ -100,7 +138,8 @@ function xmlToJson( xml ) {
 			}
 		}
 	}
-	return obj;
+	return JSON.stringify(obj);
+	//return obj;
 }
 
 /**
@@ -108,6 +147,8 @@ function xmlToJson( xml ) {
  * converts XML string to XML DOM object
  * converts XML DOM object into JSON object
  * returns JSON object
+ * @param {File} file to read
+ * @param {Function} callback function
  * */
 function read ( file, callback ) {
     
@@ -122,14 +163,21 @@ function read ( file, callback ) {
         try{
             
            xmlDoc = parserDom.parseFromString(reader.result,"text/xml");
-           var jsonObj = xmlToJson(xmlDoc);
-           callback(jsonObj , "/" , "application/json",function ( json ) {
-               return JSON.stringify(json);
-           });
+        
+           if ( xmlDoc.childNodes.length > 1 ) {
+
+               var e = new Error("file is not xml");
+               e.name = "Require XML";
+               throw e;
+               
+           }
            
-        }catch(err){
+           var jsonObj = xmlToJson(xmlDoc);
+           callback.comm.post(jsonObj , "/" , "application/json");
+           
+        }catch ( err ) {
             
-          console.log(err);
+          callback.logger.readError(err);
           
         } 
       }
@@ -140,10 +188,10 @@ function read ( file, callback ) {
 
         reader.readAsText( file, "UTF-8" );
         
-    }catch(err){
+    }catch( err ){
     
-        console.log( "func(read): ",err.name, err.message );
-    
+        //console.log( "func(read): ",err.name, err.message );
+        throw err;
     }
   
 }
@@ -151,9 +199,12 @@ function read ( file, callback ) {
 /**
  * creates xmlHTTPRequest obj
  * posts data, to url, with a callback
+ * @type {Function}
  * */
 var xmlHttpHandler = function () {
-        
+     
+    var that = this; 
+    
     function createXHR () {
         
         try {
@@ -164,37 +215,49 @@ var xmlHttpHandler = function () {
         }
     }
     
-    this.post = function ( data, url, type, callback ) {
+    that.logger = new ErrorHandler();
+
+    that.post = function ( err , data, url, type, callback ) {
         
         var xhr = createXHR();
         
-        if ( xhr !== 0 ){
+        if ( arguments.length > 1 ) {
             
-            xhr.onreadystatechange=function() {
+            console.log(arguments);
+            if ( xhr !== 0 ){
                 
-                if ( this.readyState === 4 && this.status === 200 ) {
+                xhr.onreadystatechange=function() {
                     
-                    if ( this.responseText !== '' ) {
+                    if ( this.readyState === 4 ) {
+                        if( this.status === 200 ) {
                         
-                        document.getElementById("resText").innerHTML += ("<p class='log-entry'>" + this.responseText + "</p>");
-                  
+                            if ( this.responseText ) {
+         
+                                that.logger.readSuccess(("<p class='bg-success'>" + this.responseText + "</p>"));
+                          
+                            }
+                        }else {
+                        
+                                that.logger.readError(("<p class='bg-danger'>" + this.responseText + "</p>"));
+                        }
                     }
+                };
+                
+                try{
+                  
+                  xhr.open("POST",arguments[1],true);
+                  xhr.setRequestHeader("Content-type", arguments[2]);
+                  xhr.send(arguments[0]);
+                  
+                }catch( err ) {
+                    
+                    that.logger.readError(err);
+                    //throw(err);
                 }
-            };
-            
-            try{
-                
-              //xhr.open("POST","/",true);
-              xhr.open("POST",url,true);
-              xhr.setRequestHeader("Content-type", type);
-              xhr.send( callback(data));
-              //xhr.send( JSON.stringify(data));
-              
-            }catch( err ) {
-                
-                console.log(err.name, err.message);
-                
             }
+        }else {
+            
+            throw err;
         }
     
     };
@@ -202,12 +265,22 @@ var xmlHttpHandler = function () {
 };
 
 window.addEventListener("load", function () {
+
+    var clientConnect = new xmlHttpHandler();
+    var serverRes = document.getElementById("resText");
+    clientConnect.logger.errElem = serverRes;
+    clientConnect.logger.successElem = serverRes;
     
-    /**
-     * @function reads a File Object as text; for an XML document object; converts XML object to JSON object; callback()
-     **/
-    
-    
+    var clientUpdate = {
+            comm : new xmlHttpHandler(),
+            logger : new ErrorHandler()
+        };
+    var errorLog = document.getElementById("error-log");    
+    clientUpdate.logger.errElem = errorLog;
+    clientUpdate.logger.successElem = errorLog;
+    clientUpdate.comm.logger.errElem = serverRes;
+    clientUpdate.comm.logger.successElem =serverRes;
+
     var updateBtn = document.getElementById("update-btn");
     var connectBtn = document.getElementById("connect-db");
     var clickInput = document.getElementById("click-upload-input");
@@ -219,12 +292,11 @@ window.addEventListener("load", function () {
     });
     
     connectBtn.addEventListener("click", function ( event ) {
-       
-        var client = new xmlHttpHandler();
+        
         var route = event.target.dataset["connection"] === "on"?"/mongo/stop":"/mongo/start";
         var status = event.target.dataset["connection"] === "on"? "off" : "on";
 
-        client.post(status, route, "text/plain", function ( db ) {
+        clientConnect.post(status, route, "text/plain", function ( db ) {
             return db;
         });
 
@@ -235,17 +307,24 @@ window.addEventListener("load", function () {
     updateBtn.addEventListener("click", function () {
 
         var files = clickInput.files;
-        console.assert(files.length > 0, "FileList is empty");
-        console.assert(connectBtn.dataset["connection"] === "on", "MongoDB not connected");
         
-        var client = new xmlHttpHandler();
+            console.assert(files.length > 0, "FileList is empty");
+        
+            console.assert(connectBtn.dataset["connection"] === "on", "MongoDB not connected");
         
         for ( var i = 0; i < files.length; i++ )  {
         
-            read(files.item(i), client.post);
+            try{
+                
+                read(files.item(i), clientUpdate);
+                
+            }catch ( err ) {
+                
+                clientUpdate.logger.readError(err);
+                continue;
+            }
 
         }
-    
     
     });
 });
