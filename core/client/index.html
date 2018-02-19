@@ -1,25 +1,35 @@
-<html lang="en" ng-app="MongoAdminApp">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="./css/style.custom.css" type="text/css" />
+        <link rel="stylesheet" href="./css/style.custom.angular.css" type="text/css" />
         
         <script type="text/javascript" src="./js/angular.min.js"></script>
-        <script type="text/javascript" src="./js/admin.js"></script>
+        <script type="text/javascript" src="./js/mongo_admin.module.js"></script>
     </head>
     
-    <body>
-        <div class="content-container" ng-controller="AdminController">
+    <body ng-app="MongoAdminApp">
+        
+        <div class="content-container">
             
-            <div class="head-container">
+            <div class="column-left">
                 
-                    <form id="form">
+                    <form id="form" data-model="file-model" data-controller="file-controller" data-view="file-view" ng-controller="formController">
                         
-                        <input class="btn" id="click-upload-input" type="file" input-file-model="files" required multiple>
-                        
-                        <input type="text" id="collection-name" placeholder="collection name" required>
+                        <input class="btn" id="file-model" type="file" input-file-model="files" required multiple>
+                        <div class="btn-group">
+                            
+                            <button class="btn" id="create" create-schema="schema-controller">
+                                Create Schema
+                            </button>
+    
+                            <select class="btn" id="file-controller" ng-model="data.model" input-file-list="myList">
+                                <option>Preview file</option>
+                                <option ng-click="clicked($event)" class="preview-input" id="{{file.id}}" ng-repeat="file in data.files" ng-value="file.obj">{{file.obj.name}}</option>
+                            </select>
+                        </div>
                         
                         <div class="btn-group">
                             
@@ -27,52 +37,31 @@
                             <button class="btn" type="submit" id="update-btn">Update Database</button>
                             
                         </div>
-                        
+                        <div class="p-2 mr-2" id="file-view" input-file-preview="myPreview">
+                        </div>
                     </form>
                     
-                    <nav class="btn-group">
-                        
-                        <button class="btn" id="create">
-                            Create Schema
-                        </button>
-                        
-                        <!--<button class="btn" id="preview" preview-directive>
-                            Preview Document
-                        </button>-->
-                        <select class="btn" input-file-list="list">
-                            <option>Preview Document</option>
-                        </select>
-                        
-                    </nav>
             </div>
             
-            <div class="main-container">
-                
-                <div class="left column" input-file-preview="preview">
-                    DIV for Preview and Schema functionality
-                </div>
-                
-                <div class="right column">
+            <div class="column-right">
                     
-                    <h4 class="text-center">Log</h4>
+                <h4 class="text-center">Log</h4>
+                
+                <div class="stacked">
                     
-                    <div class="stacked">
+                    <div class="logger stack" id="resText">
                         
-                        <div class="logger stack" id="resText">
-                            
-                            <h6>express res</h6>
-                            
-                        </div>
+                        <h6>Express Responses</h6>
                         
                     </div>
                     
-                    <div class="stacked">
+                </div>
+                
+                <div class="stacked">
+                    
+                    <div class="logger stack" id="error-log">
                         
-                        <div class="logger stack" id="error-log">
-                            
-                            <h6>javascript errors</h6>
-                            
-                        </div>
+                        <h6>Javascript Errors</h6>
                         
                     </div>
                     
