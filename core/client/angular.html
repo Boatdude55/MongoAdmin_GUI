@@ -1,0 +1,117 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="./css/style.custom.angular.css" type="text/css" />
+        
+        <script type="text/javascript" src="./js/angular.min.js"></script>
+        <script type="text/javascript" src="./js/admin.js"></script>
+    </head>
+    
+    <body ng-app="MongoAdminApp">
+        
+        <div class="content-container">
+            
+            <div class="column-left">
+                
+                    <form id="form" data-model="file-model" data-controller="file-controller" data-view="file-view" ng-controller="formController">
+                        
+                        <input class="btn" id="file-model" type="file" input-file-model="files" required multiple>
+                        <div class="btn-group">
+                            
+                            <button class="btn" id="create">
+                                Create Schema
+                            </button>
+    
+                            <select class="btn" id="file-controller" input-file-list="myList">
+                                <option>Preview file</option>
+                                <option class="preview-input" id="{{file.id}}" ng-repeat="file in files">{{file.obj.name}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="btn-group">
+                            
+                            <button class="btn" id="connect-db">Database OFF</button>
+                            <button class="btn" type="submit" id="update-btn">Update Database</button>
+                            
+                        </div>
+                        
+                        <div class="left column" id="file-view" input-file-preview="myPreview">
+                            DIV for Preview and Schema functionality{{preview.json}}
+                        </div>
+                    </form>
+                    
+            </div>
+            
+            <div class="column-right">
+                    
+                <h4 class="text-center">Log</h4>
+                
+                <div class="stacked">
+                    
+                    <div class="logger stack" id="resText">
+                        
+                        <h6>Express Responses</h6>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="stacked">
+                    
+                    <div class="logger stack" id="error-log">
+                        
+                        <h6>Javascript Errors</h6>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
+<!--
+<html>
+    <head>
+        <script type="text/javascript" src="./js/angular.min.js"></script>
+    </head>
+
+<body ng-app = "myApp">
+
+  <form ng-controller = "myCtrl">
+     <input type = "file" file-model="files" multiple/>
+     <select>
+         <option>Preview file</option>
+         <option ng-repeat="file in files" id="{{}}">{{file.name}}</option>
+     </select>
+  </form>
+  <script type="text/javascript">
+      angular.module('myApp', []).directive('fileModel', ['$parse', function ($parse) {
+          
+        return {
+           restrict: 'A',
+           link: function(scope, element, attrs) {
+               
+              element.bind('change', function(){
+                  
+                  console.log($parse(attrs.fileModel));
+                  
+                  $parse(attrs.fileModel).assign(scope,element[0].files);
+                     scope.$apply();
+                     
+              });
+           }
+        };
+     }]).controller('myCtrl', ['$scope', '$http', function($scope, $http){
+            
+            
+     }]);
+  </script>
+  </body>
+</html>
+-->
