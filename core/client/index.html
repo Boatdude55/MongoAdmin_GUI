@@ -3,7 +3,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="./css/style.custom.angular.css" type="text/css" />
         
         <script type="text/javascript" src="./js/angular.min.js"></script>
@@ -16,12 +15,12 @@
             
             <div class="column-left">
                 
-                    <form id="form" data-model="file-model" data-controller="file-controller" data-view="file-view" ng-controller="formController">
+                    <form id="form" data-model="file-model" ng-controller="formController">
                         
                         <input class="btn" id="file-model" type="file" input-file-model="files" required multiple>
                         <div class="btn-group">
                             
-                            <button class="btn" id="create" create-schema="schema-controller">
+                            <button class="btn" id="create" create-schema="mySchema">
                                 Create Schema
                             </button>
     
@@ -31,13 +30,12 @@
                             </select>
                         </div>
                         
-                        <div class="btn-group">
-                            
-                            <button class="btn" id="connect-db">Database OFF</button>
-                            <button class="btn" type="submit" id="update-btn">Update Database</button>
+                        <div class="btn-group" mongo-server="myServer">
+                            <button class="btn bg-{{mongo.state}}" id="connect-db" ng-click="connect()">Database {{mongo.text}}</button>
+                            <button class="btn bg-{{mongo.state}}" type="submit" id="update-btn">Update Database</button>
                             
                         </div>
-                        <div class="p-2 mr-2" id="file-view" input-file-preview="myPreview">
+                        <div class="p-2 mr-2 code" id="file-view" input-file-preview="myPreview">
                         </div>
                     </form>
                     

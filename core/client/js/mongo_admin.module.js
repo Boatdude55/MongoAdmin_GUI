@@ -187,6 +187,7 @@ var formController = adminModule.controller("formController",['$scope','$element
 adminModule.directive("inputFileModel", [ '$parse', function ( $parse ) {
     /**
      * Directive for input type file
+     * Exposes unbinded input type file to other directives and controllers
      * */
     return {
       restrict: 'A',
@@ -223,9 +224,9 @@ adminModule.directive("inputFileList", function () {
      * */
     return {
       restrict: 'A',
-      scope: false,
+      scope: true,
       controller:[ '$scope', '$element', '$attrs', 'xmlReaderFactory', function ( $scope, $element, $attrs, xmlReaderFactory ) {
-        
+
             $scope.clicked = function ( $event ) {
                 
                 var key = $scope.data.model;
@@ -258,7 +259,47 @@ adminModule.directive("inputFilePreview", function () {
     return {
       restrict: 'A',
       scope: true,
-      template: '<pre><code>{{data.json}}</code></pre>',
+      template: '<pre>{{data.json|json}}</pre>',
       replace: true
     };   
+});
+
+adminModule.directive("mongoServer", function () {
+    
+    return {
+       restrict: 'A',
+       scope: { },
+       controller:['$scope', '$http', function ( $scope, $http ) {
+
+           $scope.mongo = {
+               state: "warning",
+               route: "/mongo/start",
+               resType: "text/plain",
+               text: "OFF"
+           };
+           
+           $scope.connect = function () {
+               
+               $http({
+                   method: 'POST',
+                   url: $scope.mongo.route,
+                   data: $scope.mongo.state,
+                   headers: {
+                       "Content-Type": $scope.mongo.resType
+                   }
+               }).then(function successCallback(response) {
+                   
+                    $scope.mongo.route = $scope.mongo.state === 'warning' ?"/mongo/stop":"/mongo/start";
+                    $scope.mongo.state = $scope.mongo.state === 'success' ? 'warning' : 'success';
+                    console.log(response);
+                  }, function errorCallback(response) {
+                      
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log(response);
+                  });
+        
+           };
+       }]
+    };
 });

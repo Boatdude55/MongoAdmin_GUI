@@ -1,6 +1,8 @@
 body{
-    height: 100%;
+    height: 80%;
     width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .content-container{
@@ -20,7 +22,7 @@ body{
 .logger{
     overflow-y: scroll;
 }
-.bg-danger{
+.bg-warning{
     background-color: rgb(255,100,100);
     color: rgb(255,255,255);
 }
@@ -33,4 +35,14 @@ body{
 .mongodb-on{
     background-color: rgb(124,252,0);
     color: rgb(255,255,255);
+}
+pre {
+    /*Credit to adambox StackOverflow*/
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    padding: 20px;
+    overflow-y: scroll;
 }
