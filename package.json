@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "A adminstrative app for mongodb using express and mongoose",
   "licence": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
   "main": "server.js",
   "author": "Ivan Mucyo Ngabo <IvanMucyoNgabo@gmail.com>",
   "dependencies": {

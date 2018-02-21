@@ -21,7 +21,8 @@ module.exports.update = function ( req, res, next ) {
         var model = require("../models/schemas");//folder contains models
         
         var newModel = new model.billSummary(req.body);
-
+        
+        mongooseAdmin.addDocument( newModel );
         res.status(200).send("Document recieved");
         
     }catch( err ) {
